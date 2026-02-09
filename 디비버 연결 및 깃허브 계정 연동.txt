@@ -1,0 +1,34 @@
+초록버튼 옆에 플러스모양
+create file
+git checkout 브렌치 이름 = 브렌치 선택
+git pull origin 블렌치 이름 = 브렌치에있는거 내려받기
+git checkout -b 브렌치 이름 =브렌치 생성
+git add .
+git commit -m "메시지"
+git push -u origin 현재 작업중인 브렌치
+
+깃허브 코드에서 main 이 아니라 내가 작업하던 브렌치 선택하고 위에서 pull requests 선택
+new pull request
+compare 쪽에 브렌치를 내가 작업하던 브렌치로 바꾸고
+아래쪽에 맞는지 확인하고
+create pull request 누르고 메시지 작성 create pull request
+
+
+팀장쪽은 확인후 merge pull request 누르고 confirm merge
+팀원이 하면 안됨!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+디비버 플러그 모양 좌측 상단 파일 아래
+my sql 선택 후 다음
+server Host 칸에 codevlab.kr
+database 칸에 데이터 베이스 이름
+username 칸에 유저네임
+password 칸에 비밀번호
+
+driver properties 에 allowPublicKeyRetrieval true 로 바꾸기
+
+
+
+
+
+
+

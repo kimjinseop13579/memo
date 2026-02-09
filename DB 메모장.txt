@@ -1,0 +1,393 @@
+자바
+
+명령 프롬프트
+ - mysql -u javaUser -p
+ 1234
+       (뒤에 세미콜론 찍어 줘야함)                              
+ - show databases;                                               
+ - use javaExample;                                               
+ - show tables;    
+ - create table jusorok (
+num int not null auto_increment primary key,
+name varchar(50) not null,
+callNum  varchar(15)
+createdDate DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+>>> DB설계(모델링)
+
+* 회원테이블 : member
+회원 번호 : no int not null auto_increment unique,
+아이디 : id varchar(30) not null primary key,
+비밀번호 : passward varchar(50) not null,
+이름 : name varchar(50) not null,
+전화번호 : phone varchar(20) not null,
+등록일 : createdData DATETIME DEFAULT CURRENT_TIMESTAMP
+
+>>> DB 생성
+
+create table member (
+no int not null auto_increment unique,
+id varchar(30) not null primary key,
+passward varchar(50) not null,
+name varchar(50) not null,
+phone varchar(20) not null,
+createdData DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+* 제약조건 ==> 무결성 
+1. primary key( 기본키 ) : 중복x, 하나의 테이블에 하나만 가능, null 허용안함
+2. Foreign key(참조키, 외래키)
+3. unique : 중복x null 허용
+4. not null : null 허용안함
+5. default : 
+6. enum() : 괄호안에 허용된 조건외에는 값을 넣을수 없음
+7. check : 범위를 정해주는 용도 
+
+enum("남자", "여자")
+CHECK (price > 0)
+
+desc member;
+ - member(DB이름) 내부 보기
+
+select * from member;
+ - member 테이블에있는 정보를 모두 화면에 출력
+
+select no, id, name from member order by no asc;
+ - member 테이블에 있는 no, id, name 을 보여주고 no 를기준으로 내림차순 정렬
+
+select no, id, name from member order by no desc;
+ - 위의 것과 같은것을 보여주면서 no 를기준으로 오름차순 정렬
+
+select no, id, name from member order by name asc, id desc;
+
+select no, id, name from member where id = 'hong';
+ - member 테이블에서 id 가 'hong' 인사람의 no, id, name 을 불러와줘 라는뜻
+
+select no, id, name from member where name = '이성순';
+ - member 테이블에서 name 이 '이성순' 인사람의 no, id, name 을 불러와줘 라는뜻
+
+select no, id, name from member where no > 3;
+ - member 테이블에서 no 가 3 을넘는 사람의 no, id, name 을 불러와줘 라는뜻(조건이 숫자int 일때만 가능)
+
+select no, id, name from member where no > 3 and name = '이성순';
+ - member 테이블에서 no 가 3 을넘으면서 name 이 이성순 인사람의 데이터 삭제
+
+select : 조회, 검색
+insert : 삽입, 추가, 등록
+update : 수정
+delete : 삭제
+
+DDL : 데이터의 정의어 - create, alter, drop, truncate    테이블을 대상으로 작용함
+DML : 데이터의 조작어 - select, insert, update, delete => record   테이블 내부에 데이터를 대상으로 작용
+DCL : 데이터의 제어어 - grant, revoke
+TCL : 트랜젝션 제어어 - commit, rollback, savepoint 
+
+delete from member;
+ - member 테이블에 있는 모든데이터 삭제
+
+delete from member where name = '홍길동';
+ - member 테이블에 있는 name 에 홍길동 이들어가는 사람의 데이터를 삭제
+
+delete from member where no = 1;
+ - member 테이블에 있는 no 에 1 이 들어가는 사람의 데이터를 삭제
+
+inssert into member (필드명,필드명,필드명,필드명,필드명)
+values                   (값,     값,     값,     값,      값);
+
+- 필드명에 들어갈 값을 넣어주는 용도
+
+insert into member (no, id, passward, name, phone, createdData)
+values (null, 'kim', '1234', '홍길동', '010-1231-4564'  ,now());
+
+insert into member (no, id, passward, name, phone, createdData)
+values (null, 'lee', '1324', '이순신', '010-7485-4152'  ,now());
+
+insert into member (no, id, passward, name, phone, createdData)
+values (null, 'jang', '1362', '장천용', '010-9685-6351'  ,now());
+
+3. 이순신 -> 홍성순
+update member set name = '홍성순' where no = 3;
+ - member 테이블에 no 가 3 인곳에 name 필드 값을 '홍성순' 으로 바꾼다.
+
+
+
+not null
+- null 허용안함
+
+primary key( 기본 키 )
+- 중복x 
+- 하나의 테이블에 하나만 들어갈수있음
+- null 허용안함.
+
+auto_increment
+- 숫자 자동으로 증가
+
+unique ( 유니크 )
+- 중복x
+- null 허용함
+- 하나의 테이블에 여러개 사용가능
+                                                                          
+ - 표 (table)
+   행 : row, record, table
+   열 : column, field, attribute
+
+
+ - varchar 가변형 - 낭비되는 공간이있을때 들어온 글자를 제외한 낭비되는공간을 없애서 
+                       낭비되는 공간이 없음
+ - char 고정형 - 공간자체를 고정해서 낭비되는공간을 놔두고 계산을 함
+                     계산속도가 가변형보다 조금더 빠름 
+ - DATETIME - 시간 
+ - TEXT -  긴글을 쓸때 사용됨
+ - LONGTEXT - 매우긴글을 쓸때 사용됨
+
+
+
+oracle
+mysql == mariadb
+ms-sql
+postgreSQL
+MongoDB
+SQLlite
+...   
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 2026. 01. 20 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 2026. 01. 23 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+
+테이블 명 : student
+create table student(
+hakbuun int not null auto_increment primary key,
+name varchar(50) not null,
+ssn varchar(15) not null unique,
+phone varchar(15),
+address varchar(250) not null,
+createdDate datetime DEFAULT CURRENT_TIMESTAMP
+);
+
+
+* 기본키
+ - 후보키
+기본키가 될수있는 후보들
+
+ - 기본키
+
+ - 대체키
+ 후보키에서 기본키를제외한 언제든 기본키로 데체할수있는키
+
+수퍼키
+기본키가 될수있는게 없어 두개이상의 키를 묶어 사용하는 키
+
+외래키
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+프로필
+기본키 값, 이미지 경로, 닉네임, 이메일, 계정값,
+
+회원
+기본키 값, 이메일, 비밀번호, 닉네임, 생년월일
+
+member 테이블
+기본키 값, 이메일, 비밀번호, 닉네임, 생년월일, 이미지경로
+랭킹, 업적목록
+
+   테이블 설계
+
+정규화란?
+ - 데이터를 잘게나눠 규칙을 정하는 작업
+   데이터가 커지면 꼬임,중복,오류가 발생되는데 이를 막기위한방법
+   공식정의 -> 데이터 중복과 이상현상을 제거하기 위해 테이블을 
+   구조적으로 분해하는 과정
+
+이상현상
+1. 삽입 이상
+   학과명이 없어 학생을 등록못한다.
+   학원에서 새로운 과정을 개설했다. 새 과정을 테이블에 
+   저장 해야되는데 아직 수강생이 없어 등록 못한다.
+
+2. 갱신 이상
+   같은정보가 여러행에 중복되있어, 일부만 수정하면 데이터가 달라지는 문제   
+
+3. 삭제 이상
+   어떤데이터를 지웠더니 원치않는 다른 데이터까지 같이 사라지는 문제
+
+정보화 규칙
+1. 한테이블은 하나의 주제
+2. 하나의 컬럼에는 하나의 값
+3. 기본키로 모든 데이터가 조회가 가능해야함
+4. 파생정보는 저장하지않는다. 
+   -> 생년월일 저장했는데 나이를 또 저장하는것
+
+정규화 단계
+제1정규화(1NF), 제2정규화(2NF), 제3정규화(3NF)
+보이스-코드 정규화 (BCNF), 제4정규화(4NF),
+제5정규화(5NF), 도메인-키 정규화(DKNF), 제6정규화(6NF) 
+
+제1 정규화
+ -> 테이블의 모든 컬럼에는 더이상 쪼갤수없는 원자값이어야한다.
+     1정규화를 했을때 외래키가 반드시 필요한것은 아니다 필요한경우가 있지만 모든경우는 아니다.
+     하나의 컬럼에 여러개의 값이 들어가지 않아야한다, 같은이름의 컬럼(제목1,제목2,제목3) 을
+     사용하는것도 1정규화에 위배된다.
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ2026.01.28ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+제2 정규화
+-> 1정규화를 만족하고 모든 컬럼이 기본키에 완전 종속된다.
+-> 테이블간의 관계를 맺기 위해서는 2정규화가 필요함
+ - 관계는 1 - 1, 1 - n(다수), n - 1, 등이 있음 (n - n 도있지만 이론상가능이고 아직 상용화될정도로 구현되진 않음) 
+
+종속판별
+ - a값이 같으면 b도 항상 같은가?
+ -- a 가 같은 행들이 여러개 있을때 b가 항상 동일 해야 a->b성립
+    id, student_id, student_name 컬럼이 있다면
+    student_id -> student_name 성립이 되는지 
+
+ - a하나만으로 b를 결정할수있는가?
+ -- a하나만 알면 b가 딱하나로 확정 되는가
+
+ - 예외 케이스가 존재하는가
+ -- 종속은 대부분이 아니라 항상이어야 한다
+ -- 예외가 1개라도 있으면 그 종속은 성립하지 않거나 설계규칙이 틀린거다
+ -- 데이터의 저장이 잘못되었거나
+ -- 업무규칙이 애매하다
+
+ - 계획을 할때 그 프로그램에 정책을 정해야한다
+ -- 비밀번호는 30 일에 한번씩만 바꾼다, 한명의 사람은 한가지의 무언가만 가진다
+    아이디는 ??으로 만든다 와같은 정책을 정하고 해야한다
+
+ - 항상 하나로 정해지면 종속
+ -- 한 과정(course) 에 여러 학생이 수강한다. 
+ course_id -> student_id
+
+ -- 프로젝트 팀 구성에서 한팀 안에서 팀원은 역할을 1개 갖는다.
+    (team_id, member_name) -> role
+
+ -- 과정별 담당 강사가 가간에 따라 변결 될수 있다.
+    course_id -> teacher_name
+
+ -- 학생 id는 학원에서 유일하다.
+     student_id ->student_name
+
+ -- 과정 id는 과정 하나를 의미한다.
+    course id -> course_name (종속) 
+ 
+ -- 과정명이 변경될 수 있고, 중복 이름도 가능하다.
+     course_name -> course_id 
+
+ -- 학생은 같은 과정에서 한번만 등록 가능하다.
+     (student_id, course_id) -> enroll_date (종속)
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ2026.0?.??ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+dbdiagram 데이터 베이스 만드는 사이트
+create your diargram 누르면 만들어짐
+
+테이블들의 관계형성
+
+테이블 관계란 서로 다른 테이블의 데이터가 어떻게 연결되는 지를 나타내는 구조
+
+테이블 관계가 필요한 이유
+정규화 적용 후에 데이터는 나뉘어 있고 화면과 조회에서는 다시 하나로 합쳐서 봐야한다
+
+pk + fk 로연결
+JOIN 으로 함께 조회
+
+정규화는 저장을 위해 나누는 작업이고
+관계형성은 조회를 위해
+
+관계
+1:1(one to one)
+한 행이 정확히 한 행과만 연결
+
+회원 <-> 프로필
+거의 쓰이지 않음
+단, 보안 /확장/ 선택적 정보 분리 목적에 사용
+
+1:N (one to many) OR N:1
+하나는 여러개를 가질수있다
+외래키는 항상 N쪽에 있다
+
+학생(1) <-> 수강기록(N)
+한학생이 여러개의 강의를 수강함
+주문상품(N) <-> 주문(1)
+하나의 주문으로 여러개의 상품을 주문함
+
+N <-> N (many to many)
+서로 여러개를 가진다.
+직접 연결 불가 , 중간테이블 필요
+
+학생(N) <-> 강의(N)
+학생(N) <-> 등록(1) <-> 강의(N)
+
+한 학생은 여러 강의를 수강할수있다.  한강의에는 여러학생이 수강한다.
+학생(N)  <-> 수강(N)
+
+한 회원은 여러 주문을 할수있다, 한 주문은 한 회원에 의해 생성된다.
+ 회원(1) <-> 주문(N)
+ 회원의 PRIMARY KEY 로 조회를 했을때 주문은 여러개 나온다
+ 주문쪽의 키로 회원을 조회하면 한명의 회원만 나온다
+
+ 한 주문에는 여러 상품이 포함될수있다
+ 한 상품은 여러주문에 포함될수있다.
+ 주문(N) <-> 상품(N)
+
+게시글 하나에 여러장의 이미지 게시 가능하다
+하나의 이미지는 하나의 게시글에 사용가능하다.
+게시판(1) <->이미지(N)
+
+강의(N)<-> 강사(1)
+
+dbdiagram 에서 테이블을 생성하고
+n : 1 관계를 맺으면 1 인 테이블에서 
+연결된 n테이블로 이어주면 된다
+연결된 선에서 1은 처음 시작테이블에 1이 붙고
+n 인테이블에는 *이 붙는다
+
+dbdiagram 에서만든 테이블을 dbever 에 연결하는방법
+
+
+
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ2026.01.30ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+ - 외부키를 가져올때 외부키는 중복될수있다
+
+3정규화는 정보를 정리할때 primary key 와 아무런 관련없는 컬럼을 찾는것
+
+ 이행종속
+ primary key 에 종속이된 컬럼이 있는데 그 종속된컬럼에 종속된 즉 간접 종속이 된 컬럼을말함
+
+ 1정규화
+ - 하나의 컬럼에는 하나의 값만이 들어갈수있다
+ - 1정규화는 테이블 설계의 완성이 아니다. 형태를 정하는 단계일 뿐이다 
+ - 행만늘려주고 끝나는 경우는 단순반복, 같은 의미의 값(좌석 테이블 처럼
+    테이블 분리가 필요한경우 -> 의미가 다른 데이터
+      -> 독립적으로 관리해야할 데이터 (2정규화, 3정규화 해야한다))
+
+ 2정규화
+ - 복합 pk를 가지는 경우에 2정규화를 적용한다.
+
+ 3정규화
+ - 단일pk 에 종속 되지않는(관계없는) 컬럼 분리하기
+
+
+
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ2026.02.02ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ2026.02.04ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+
+4. 팀(이성찬(팀장), 김진섭, 박찬용, 황성현)
+ -> 기획하고 수정하게 되면 본래하려던 방향과
+     수정하게된 방향을 적어서 제출
+
+2. 출결관리
+   - 출결 등록(출석 결석 조퇴 지각 외출 )
+      학생테이블 , 학생이 듣는 과정 테이블
+     출결 테이블, 날짜별 조회가능
+      출석률 집계, 중복출결방지
+학생이름  출석,결석,조퇴,지각,외출 학생이 듣는 과정  날짜
